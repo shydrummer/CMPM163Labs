@@ -24,11 +24,10 @@
 			
 			    // setup the cube
                 var geometry = new THREE.BoxGeometry();
-                var material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x00ff00, reflectivity: 0.2, shininess: 30, map: new THREE.TextureLoader().load('space.jpg'), normalMap: new THREE.TextureLoader().load('normal.jpg') });
+                var material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x00ff00, reflectivity: 0.2, shininess: 30, normalMap: new THREE.TextureLoader().load('space.jpg'), map: new THREE.TextureLoader().load('normal.jpg') });
       			var cube = new THREE.Mesh( geometry, material );
      			scene.add(cube);
                 cube.position.set(3, 2, 0);
-                //cube.position(3, 2, 0);
 
                 var geometry2 = new THREE.BoxGeometry();
                 var material2 = new THREE.MeshPhongMaterial( { color: 0x3287a8, specular: 0xde47ca, shininess: 10 });
@@ -41,13 +40,22 @@
                 scene.add(light);
 
                 var geometry1, material1, mesh1;
+                var geometry4, material4, mesh4;
+
+                var clock =  new THREE.Clock();
 
                 function addCoolCube() {
-                    if(count == 2) {
+                    if(count == 3) {
 
                         let uniforms = {
                             colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)},
-                            colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)}
+                            colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)},
+                        };
+
+                        let uniforms2 = {
+                            delta: { value: 0 },
+                            u_resolution: { value: new THREE.Vector2(1280, 720) },
+                            u_time: {value: Date.now() }
                         };
 
 
@@ -56,6 +64,13 @@
                         mesh1 = new THREE.Mesh(geometry1, material1);
                         mesh1.position.x = 2;
                         scene.add(mesh1);
+
+                        geometry4 = new THREE.BoxGeometry(3, -2, 1)
+                        material4 = new THREE.ShaderMaterial({uniforms: uniforms2, fragmentShader: fshader2, vertexShader: vshader, precision: "mediump" });
+                        mesh4 = new THREE.Mesh(geometry4, material4);
+                        mesh4.position.x = -4;
+                        mesh4.position.y = 0;
+                        scene.add(mesh4);
                 }	
             }
 
@@ -63,7 +78,7 @@
                 THREE.Cache.enabled = true;
                 var count = 0;
                 var loader = new THREE.FileLoader();
-                var fshader, vshader;
+                var fshader, fshader1, vshader;
 
                 loader.load('shaders/vertexShader.vert',
                 // onLoad callback
@@ -98,10 +113,30 @@
                         function (err) {
                             console.error('An error happened');
                         });
+
+                    loader.load('shaders/fragmentShader2.frag',
+                    // onLoad callback
+                        function (data) {
+                                console.log(data); // output the text to the console
+                                fshader2 = data;
+                                count += 1;
+                                addCoolCube(); // we will write this method
+                            },
+                    // onProgress callback
+                        function (xhr) {
+                            console.log((xhr.loaded/xhr.total * 100)+ '% loaded');
+                        },
+                    // onError callback
+                        function (err) {
+                            console.error('An error happened');
+                        });
     
 
                 function animate() {
                     requestAnimationFrame(animate);
+
+                    render();
+
                     geometry.rotateX(0.01);
                     geometry.rotateY(0.01);
 
@@ -113,8 +148,25 @@
                         geometry1.rotateY(0.01);
                     }
 
-                    renderer.render(scene, camera);
+                    if(geometry4) {
+                        geometry4.rotateX(0.01);
+                        geometry1.rotateY(0.01);
+                    }
+
                 }
+                var delta = 0;
+
+                function render() {
+                    delta += 0.1;
+
+                    material4.uniforms.delta.value = 0.5 + Math.cos(delta) * 0.0005;
+                    mesh4.material.uniforms.u_time.value = delta * 2;
+
+
+                    renderer.render(scene, camera);
+
+                }
+
                 animate();
 		</script>
 	</body>
