@@ -10,8 +10,9 @@ For the second cube, I used the three.js built in Phong shader. In the parameter
 
 For the third cube, I followed the setup from the tutorial to make a custom shader. In the fragment shader, I used the mix function to interporalte between two colors. I modified the color output to fall along the vUv.y rather than the vUv.x, to see how that would affect the output of the shader, as this sube I made following the video instructions.
 
-For the final cube on the right, I used the three.js build in Phong shader. I created a green specular color. I also added a normalMap and map. For the map, I loaded a liquid graident pattern I found online.
+For the final cube on the right, I used the three.js build in Phong shader. I created a green specular color. I also added a normalMap and map. 
 
+For the map, I loaded a liquid graident pattern I found online.
 
 ![alt text](normal.jpg "normal")
 
@@ -19,4 +20,4 @@ For the normal map, I loaded a galaxy picture.
 
 ![alt text](space.jpg "space")
 
-I then...
+The map basically is a tecture that wraps the geometry of the square. The normal map is the texture used to create the RGB values that affect the surface for each vertex fragment to affect the colors. The lighter parts of the galaxy image allow the specular hilight to pass through, which is why you see the green specualr hilight only in certain parts of the texture. The darker parts of the galaxy normal map turn darker.
