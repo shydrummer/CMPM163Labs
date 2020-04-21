@@ -1,6 +1,6 @@
 Cube video link: https://drive.google.com/file/d/1I--A6AGeBcJIa3EtbBhMMYEW0mm5JxCV/view?usp=sharing
 
-![alt text](model-photo.png "shaders-photo")
+![alt text](shaders.png "shaders-photo")
 
 # How I made the cubes, left to right.
 
