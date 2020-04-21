@@ -12,10 +12,11 @@ For the third cube, I followed the setup from the tutorial to make a custom shad
 
 For the final cube on the right, I used the three.js build in Phong shader. I created a green specular color. I also added a normalMap and map. For the map, I loaded a liquid graident pattern I found online.
 
-![](normal.jpg | width=100)
+
+![alt text](normal.jpg "normal")
 
 For the normal map, I loaded a galaxy picture.
 
-![](space.jpg | width=100)
+![alt text](space.jpg "space")
 
 I then...
