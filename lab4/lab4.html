@@ -69,7 +69,7 @@
       			console.log(data); // output the text to the console
       			vshader = data;
       			count += 1;
-      			//addTextureShaderCube(); // we will write this method
+      			addTextureShaderCube(); // we will write this method
       		},
       		// onProgress callback
       		function (xhr) {
@@ -86,7 +86,7 @@
       			console.log(data); // output the text to the console
       			fshader = data;
       			count += 1;
-      			//addTextureShaderCube(); // we will write this method
+      			addTextureShaderCube(); // we will write this method
       		},
       		// onProgress callback
       		function (xhr) {
@@ -98,20 +98,20 @@
       		});
 
             
-            // add shaders cubes to scene if lodaded correctly
+            // add shaders cubes to scene if loaded correctly
             var geometry1, material1, mesh1;
 
             function addTextureShaderCube() {
             if(count == 2) {
-            let uniforms = {
-        		colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)},
-        		colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)}
+                let uniforms = {
+        		    colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)},
+        		    colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)}
         	 };
 	
       		geometry1 = new THREE.BoxGeometry(1, 1, 1);
       		material1 =  new THREE.ShaderMaterial({ uniforms: uniforms, fragmentShader: fshader, vertexShader: vshader, precision: "mediump"});
       		mesh1 = new THREE.Mesh(geometry1, material1);
-      		mesh1.position.x = 2;
+      		mesh1.position.x = 3;
       		scene.add(mesh1);
     	}
 }
