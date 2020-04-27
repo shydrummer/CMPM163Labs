@@ -56,12 +56,10 @@
 
 
             //loading shaders
-
-
             THREE.Cache.enabled = true;
             var count = 0;
             var loader = new THREE.FileLoader();
-            var fshader, vshader;
+            var fshader, fshader2, vshader;
 
         	loader.load('shaders/vertexShader.vert',
       		// onLoad callback
@@ -95,14 +93,33 @@
             // onError callback
       		function (err) {
       			console.error('An error happened');
+              });
+              
+            loader.load('shaders/fragmentShader2.frag',
+      		// onLoad callback
+      		function (data) {
+      			console.log(data); // output the text to the console
+      			fshader2 = data;
+      			count += 1;
+      			addTextureShaderCube(); // we will write this method
+      		},
+      		// onProgress callback
+      		function (xhr) {
+      			console.log((xhr.loaded/xhr.total * 100)+ '% loaded');
+      		},
+            // onError callback
+      		function (err) {
+      			console.error('An error happened');
       		});
+
 
             
             // add shaders cubes to scene if loaded correctly
             var geometry1, material1, mesh1;
+            var geometry2, material2, mesh2;
 
             function addTextureShaderCube() {
-            if(count == 2) {
+            if(count == 3) {
                 var uniforms = {texture1: { type: "t", value: THREE.ImageUtils.loadTexture("197.jpg") } };
             }
 
@@ -111,11 +128,16 @@
       		material1 =  new THREE.ShaderMaterial({ uniforms: uniforms, fragmentShader: fshader, vertexShader: vshader, precision: "mediump"});
       		mesh1 = new THREE.Mesh(geometry1, material1);
       		mesh1.position.x = 3;
-      		scene.add(mesh1);
+            scene.add(mesh1);
+              
+            geometry2 = new THREE.BoxGeometry(1, 1, 1);
+      		material2 =  new THREE.ShaderMaterial({ uniforms: uniforms, fragmentShader: fshader2, vertexShader: vshader, precision: "mediump"});
+      		mesh2 = new THREE.Mesh(geometry2, material2);
+            mesh2.position.x = 3; 
+            mesh2.position.y = 2;
+      		scene.add(mesh2);
+
     	}
-
-
-
 
 			function animate() {
 				requestAnimationFrame(animate);

@@ -1,13 +1,21 @@
-    uniform float u_time;
-    varying vec3 vUv;
+uniform sampler2D texture1;
+varying vec2 vUv;
 
-    vec4 getColor(){
+void main() {
 
-      return vec4(abs(sin(u_time)), 2, 0.9, 1.000);
-    }
+  if (vUv.x < 0.5 && vUv.y < 0.5) {
+    gl_FragColor = texture2D(texture1, vUv * 2.0);
+  }
 
-    void main() {
+  if (vUv.x < 0.5 && vUv.y > 0.5) {
+    gl_FragColor = texture2D(texture1, vec2(vUv.x * 2.0, vUv.y * 2.0 - 1.0));
+  }
 
-       vec4 result = getColor();
-       gl_FragColor = result;
-    }
+  if (vUv.x > 0.5 && vUv.y < 0.5) {
+    gl_FragColor = texture2D(texture1, vec2(vUv.x * 2.0 - 1.0, vUv.y * 2.0));
+  }
+
+  if (vUv.x > 0.5 && vUv.y > 0.5) {
+    gl_FragColor = texture2D(texture1, vUv * 2.0 - 1.0);
+  }
+}
