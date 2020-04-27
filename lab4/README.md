@@ -1,3 +1,12 @@
+cubes video link: https://drive.google.com/file/d/1BlCNwq3zuWUB0NIypOI7ek4J6SX1H8CX/view?usp=sharing
+
+# Desciption of Cubes
+
+![alt text](cubes.jpg "normal")
+
+Top row:
+
+
 # Lab 4 Questions:
 
 a) x = floor(u * 8)
