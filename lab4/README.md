@@ -2,7 +2,7 @@ cubes video link: https://drive.google.com/file/d/1BlCNwq3zuWUB0NIypOI7ek4J6SX1H
 
 # Desciption of Cubes
 
-![alt text](cubes.png "cubes")
+![alt text](cube.png "cubes")
 
 Top row:
 
