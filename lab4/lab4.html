@@ -103,10 +103,9 @@
 
             function addTextureShaderCube() {
             if(count == 2) {
-                let uniforms = {
-        		    colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)},
-        		    colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)}
-        	 };
+                var uniforms = {texture1: { type: "t", value: THREE.ImageUtils.loadTexture("197.jpg") } };
+            }
+
 	
       		geometry1 = new THREE.BoxGeometry(1, 1, 1);
       		material1 =  new THREE.ShaderMaterial({ uniforms: uniforms, fragmentShader: fshader, vertexShader: vshader, precision: "mediump"});
@@ -114,15 +113,13 @@
       		mesh1.position.x = 3;
       		scene.add(mesh1);
     	}
-}
+
 
 
 
 			function animate() {
 				requestAnimationFrame(animate);
 				renderer.render(scene, camera);
-
-
 
                 light.position.x = 50 * Math.sin(Date.now() / 300);
                 light.position.z = 50 * Math.cos(Date.now() / 300);
