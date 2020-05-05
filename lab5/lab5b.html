@@ -9,15 +9,68 @@
 		</style>
 	</head>
 	<body>
-		<script src="../three.js-master/build/three.js"></script>
+        <script src="../three.js-master/build/three.js"></script>
+        <script src="../three.js-master/examples/js/loaders/GLTFLoader.js"></script>
 		<script>
 			// setup the scene
         var scene = new THREE.Scene();
-                    var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-                    var renderer = new THREE.WebGLRenderer();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                    document.body.appendChild(renderer.domElement);
-                    camera.position.z = 60;
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        camera.position.z = 100;
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+        }
+
+        var light = new THREE.PointLight(0xcc0099, 1, 1000);
+		  light.position.set(-10, -60, 40);
+          scene.add(light);
+          
+        var light2 = new THREE.PointLight(0x6666ff, 1, 1000);
+		light2.position.set(20, 20, 60);
+        scene.add(light2);
+
+        var light2 = new THREE.PointLight(0xff3300, 1, 1000);
+		  light2.position.set(0, -10, -50);
+          scene.add(light2);
+        
+          var light2 = new THREE.PointLight(0x00e6e6, 1, 400);
+		  light2.position.set(-100, 100, 0);
+		  scene.add(light2);
+        
+        var loader = new THREE.GLTFLoader();
+		loader.load('whale.glb', function (gltf) {
+            gltf.scene.position.y = -20;
+            gltf.scene.position.x = -15;
+            gltf.scene.rotation.y = 50;
+            gltf.scene.rotation.x = -190;
+            gltf.scene.scale.set(0.1, 0.1, 0.1);
+			scene.add(gltf.scene);
+				}, function (xhr) {
+				console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+				}, function (error) {
+				console.error(error);
+            });
+        
+            var loader = new THREE.GLTFLoader();
+		    loader.load('astro.glb', function (gltf) {
+            gltf.scene.position.y = 50;
+            gltf.scene.position.x = 20;
+            gltf.scene.position.z = 2;
+            gltf.scene.rotation.y =  15;
+            gltf.scene.rotation.x = -19;
+
+            gltf.scene.scale.set(0.2, 0.2, 0.2);
+			scene.add(gltf.scene);
+				}, function (xhr) {
+				console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+				}, function (error) {
+				console.error(error);
+            });
+
 
         particles = []
         const geo = new THREE.Geometry();
@@ -29,26 +82,50 @@
                 Math.random() * 3 - 3),
                 velocity: new THREE.Vector3(
                 Math.random() * .02 - .01,
-                0.06,
+                Math.random() * 0.06,
                 Math.random() * .02 - .01),
                 acceleration: new THREE.Vector3(
                 Math.random() * .002 - .001, 
                 Math.random() * .002 - .001, 
-                0),
+                Math.random() * .001),
+                
             }
-        particles.push(particle);
-        geo.vertices.push(particle.position)
+            geo.vertices.push(particle.position);
+            geo.colors.push(new THREE.Color(Math.random(), Math.random(), Math.random()));
+
+            particles.push(particle);
+
         }
 
-        const mat = new THREE.PointsMaterial({color:0xffffff,size: 0.5});
+        const mat = new THREE.PointsMaterial({color:0xffffff,size: 0.5, vertexColors: THREE.VertexColors});
         mesh = new THREE.Points(geo,mat);
         mesh.position.z = -4;
         scene.add(mesh);
 
-
+        var count = 10;
+        var i = 0;
         function animate() {
             particles.forEach(p => {
-                p.velocity.add(p.acceleration);
+
+                // var time2 = Date.now() * 0.00005;
+                // var h = (360 * (1.0 + time2) % 360) / 360;
+                // geo2.colors[i] = new THREE.Color(h, getRandomIntInclusive(0.5, 1), getRandomIntInclusive(0.5, 1));
+
+                var time = Date.now() / 100;
+                //p.velocity.add(Math.sin(p.acceleration * theta));
+                if (Math.sin(time / 5) <= 0) {
+                    p.velocity.x = (p.velocity.x + p.acceleration.x) * Math.sin(time / 5) * 2;
+                    p.velocity.y = (p.velocity.y + p.acceleration.y) * Math.sin(time / 5) * 2;
+
+                }
+                else {
+                    p.velocity.x = -(p.velocity.x + p.acceleration.x) * Math.sin(time / 5) * 2;
+                    p.velocity.y = -(p.velocity.y + p.acceleration.y) * Math.sin(time / 5) * 2;
+                }
+
+                if (i < count)
+                    console.log(Math.sin(time) / 4);
+
                 p.position.add(p.velocity);
             });
             mesh.geometry.verticesNeedUpdate = true;
