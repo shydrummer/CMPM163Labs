@@ -1,9 +1,9 @@
 # Part 2a
 terrain with height map as texture:
-![alt text](height.png "height")
+![alt text](height-pic.png "height")
 
 terrain with a water texture: 
-![alt text](texture.png "texture")
+![alt text](texture-pic.png "texture")
 
 # Part 2b
 animated waves video: https://drive.google.com/file/d/1VG7zFHvWqpTJ-m08DYMj5OrSDZsW-w4a/view?usp=sharing
