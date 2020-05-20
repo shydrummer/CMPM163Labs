@@ -10,7 +10,7 @@ animated waves video: https://drive.google.com/file/d/1VG7zFHvWqpTJ-m08DYMj5OrSD
 
 # Part 2c
 screenshot:
-![alt text](creative.png "height")
+![alt text](creative.png "creative")
 
 link to animated video:
 https://drive.google.com/file/d/1iSaV15Iw3vloGUS2PuPEzy4PoVUMSftm/view?usp=sharing
